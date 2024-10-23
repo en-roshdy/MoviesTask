@@ -6,6 +6,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.moviestask.domain.models.MovieDetailsResponse
 import com.example.moviestask.domain.usecase.MoviesRepositoryImpl
 import com.example.moviestask.utils.BaseResponse
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -31,6 +32,9 @@ class HomeViewModel @Inject constructor(private val moviesRepositoryImpl: Movies
     private val popularMoviesMutable = MutableLiveData<BaseResponse<List<MovieModel>>>()
     val popularMoviesResponse: LiveData<BaseResponse<List<MovieModel>>> get() = popularMoviesMutable
 
+    // Details
+    private val movieDetailsMutable = MutableLiveData<BaseResponse<MovieDetailsResponse>>()
+    val movieDetailsResponse: LiveData<BaseResponse<MovieDetailsResponse>> get() = movieDetailsMutable
 
     fun getNowPlayingMovies() {
         viewModelScope.launch {
@@ -45,7 +49,6 @@ class HomeViewModel @Inject constructor(private val moviesRepositoryImpl: Movies
                 Log.d("getNowPlayingMovies", "getNowPlayingMovies: ")
                 response.throwable = e
                 response.errorString = response.errorToString(e)
-
 
 
             }
@@ -85,7 +88,7 @@ class HomeViewModel @Inject constructor(private val moviesRepositoryImpl: Movies
                 val popularMovies = moviesRepositoryImpl.getPopularMovies()
                 response.data = popularMovies.results
             } catch (e: Exception) {
-                Log.e("getPopularError", "getPopularMovies: $e", )
+                Log.e("getPopularError", "getPopularMovies: $e")
                 response.throwable = e
                 response.errorString = response.errorToString(e)
 
@@ -93,6 +96,27 @@ class HomeViewModel @Inject constructor(private val moviesRepositoryImpl: Movies
             }
             withContext(Dispatchers.Main) {
                 popularMoviesMutable.value = response
+            }
+        }
+    }
+
+    fun getMovieDetails(movieId: Int) {
+        viewModelScope.launch {
+            val response = BaseResponse<MovieDetailsResponse>()
+
+            try {
+                val popularMovies = moviesRepositoryImpl.getMovieDetails(movieId)
+                response.data = popularMovies
+            } catch (e: Exception) {
+
+                Log.e("getMovieDetails", "getMovieDetails: Error -> $e", )
+                response.throwable = e
+                response.errorString = response.errorToString(e)
+
+
+            }
+            withContext(Dispatchers.Main) {
+                movieDetailsMutable.value = response
             }
         }
     }

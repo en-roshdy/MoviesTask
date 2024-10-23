@@ -11,7 +11,7 @@ import com.example.moviestask.R
 import com.example.moviestask.databinding.ItemMovieBinding
 import com.example.moviestask.utils.Constants
 
-class MoviesAdapter : RecyclerView.Adapter<MoviesAdapter.MoviesHolder>() {
+class MoviesAdapter(private val onMovieClickListener: MovieClickListener) : RecyclerView.Adapter<MoviesAdapter.MoviesHolder>() {
 
     private val moviesList: ArrayList<MovieModel> = ArrayList()
 
@@ -44,5 +44,11 @@ class MoviesAdapter : RecyclerView.Adapter<MoviesAdapter.MoviesHolder>() {
         binding.tvMovieTitle.text = movieModel.title
 
         binding.tvReleaseDate.text = "Released at ${movieModel.release_date}"
+
+        binding.root.setOnClickListener { onMovieClickListener.onMovieClicked(movieModel.id) }
+    }
+
+    interface MovieClickListener{
+        fun onMovieClicked(movieId : Int)
     }
 }
