@@ -1,12 +1,16 @@
-import com.example.moviesapptask.Constants.Companion.BASE_URL
-import com.example.moviesapptask.data.MoviesApiService
+
+package com.example.moviestask.di
 import com.example.moviestask.data.data_source.MoviesApiService
+import com.example.moviestask.utils.Constants.BASE_URL
+import com.example.moviestask.utils.Constants.TOKEN
 import com.google.gson.GsonBuilder
+import com.ihsanbal.logging.LoggingInterceptor
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 import okhttp3.OkHttpClient
+import okhttp3.internal.platform.Platform
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import java.util.concurrent.TimeUnit
@@ -20,10 +24,22 @@ class AppModule {
     @Provides
     @Singleton
     fun provideRetrofit(): MoviesApiService {
-
+        val loggingInterceptor: LoggingInterceptor = LoggingInterceptor.Builder()
+//                .loggable(true)x
+            .setLevel(com.ihsanbal.logging.Level.BASIC)
+            .log(Platform.INFO)
+            .request("request")
+            .response("response")
+            .addHeader("Accept", "application/json")
+            .addHeader("charset", "utf-8")
+            .addHeader("Content-Type", "application/json")
+                .addHeader("Authorization", "Bearer $TOKEN")
+//                .addHeader("Accept-Language", Lingver.getInstance().getLocale().language)
+//                .addHeader("version", BuildConfig.VERSION_NAME)
+            .build()
         val okHttpClient = OkHttpClient.Builder()
             .connectTimeout(1000, TimeUnit.SECONDS)
-            .addInterceptor(RetrofitObject.HeaderInterceptor())
+            .addInterceptor(loggingInterceptor)
             .readTimeout(1000, TimeUnit.SECONDS)
             .writeTimeout(1000, TimeUnit.SECONDS)
 //                .followRedirects(false)

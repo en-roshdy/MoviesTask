@@ -1,6 +1,6 @@
 package com.example.moviestask.data.data_source
 
-import com.example.moviesapptask.models.MoviesResponse
+import com.example.moviestask.domain.models.MoviesResponse
 import retrofit2.http.GET
 
 interface MoviesApiService {

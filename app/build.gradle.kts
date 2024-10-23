@@ -47,6 +47,7 @@ android {
 }
 
 dependencies {
+
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)
     implementation(libs.material)
@@ -66,13 +67,16 @@ dependencies {
 ////        exclude group: 'org.json', module: 'json'
 //    }
 
-//    implementation("com.github.ihsanbal:LoggingInterceptor:3.1.0") {
-//        exclude(group = "org.json", module = "json")
-//    }
+    implementation("com.github.ihsanbal:LoggingInterceptor:3.1.0") {
+        exclude(group = "org.json", module = "json")
+    }
     implementation("com.google.dagger:hilt-android:2.51.1")
     kapt("com.google.dagger:hilt-android-compiler:2.51.1")
 
     implementation(libs.glide)
+
+    implementation ("androidx.lifecycle:lifecycle-viewmodel-ktx:2.8.6")
+
 
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)

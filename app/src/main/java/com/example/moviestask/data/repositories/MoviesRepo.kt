@@ -1,5 +1,7 @@
 package com.example.moviestask.data.repositories
 
+import com.example.moviestask.domain.models.MoviesResponse
+
 
 interface MoviesRepo {
 

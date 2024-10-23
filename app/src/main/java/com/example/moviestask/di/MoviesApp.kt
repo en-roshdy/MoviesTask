@@ -1,8 +1,7 @@
-package com.example.moviesapptask.di
-
+package com.example.moviestask.di
 import android.app.Application
 import dagger.hilt.android.HiltAndroidApp
 
 @HiltAndroidApp
-class MoviesAppTask : Application() {
+class MoviesApp : Application() {
 }
