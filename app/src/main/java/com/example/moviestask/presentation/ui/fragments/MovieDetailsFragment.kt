@@ -7,10 +7,13 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.activityViewModels
+import com.bumptech.glide.Glide
 import com.example.moviestask.R
 import com.example.moviestask.databinding.FragmentMovieDetailsBinding
 import com.example.moviestask.databinding.FragmentMoviesBinding
+import com.example.moviestask.domain.models.MovieDetailsResponse
 import com.example.moviestask.presentation.viewmodels.HomeViewModel
+import com.example.moviestask.utils.Constants
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -25,7 +28,7 @@ private const val ARG_PARAM2 = "param2"
 class MovieDetailsFragment : Fragment() {
 
     private lateinit var binding: FragmentMovieDetailsBinding
-    private val homeViewModel : HomeViewModel by activityViewModels()
+    private val homeViewModel: HomeViewModel by activityViewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -37,19 +40,25 @@ class MovieDetailsFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        binding.backClick.setOnClickListener { requireActivity().onBackPressedDispatcher.onBackPressed() }
         val movieId = arguments?.getInt("movieId", 0) ?: 0
         observeMovieDetails()
         homeViewModel.getMovieDetails(movieId)
     }
 
-    private fun observeMovieDetails(){
-        homeViewModel.movieDetailsResponse.observe(viewLifecycleOwner){
+    private fun observeMovieDetails() {
+        homeViewModel.movieDetailsResponse.observe(viewLifecycleOwner) {
 
-            if(it.throwable != null || it.data == null){
+            if (it.throwable != null || it.data == null) {
                 return@observe
             }
+            setData(it.data!!)
             Log.d("observeMovieDetails", "observeMovieDetails: ${it.data?.adult}")
-
         }
+    }
+
+    private fun setData(movieData: MovieDetailsResponse) {
+        Glide.with(requireContext()).load(Constants.IMAGES_URL + movieData.poster_path)
+            .into(binding.posterImage)
     }
 }
