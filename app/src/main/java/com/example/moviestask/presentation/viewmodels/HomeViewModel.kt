@@ -36,7 +36,9 @@ class HomeViewModel @Inject constructor(private val moviesRepositoryImpl: Movies
     private val movieDetailsMutable = MutableLiveData<BaseResponse<MovieDetailsResponse>>()
     val movieDetailsResponse: LiveData<BaseResponse<MovieDetailsResponse>> get() = movieDetailsMutable
 
-    fun getNowPlayingMovies() {
+
+
+    private fun getNowPlayingMovies() {
         viewModelScope.launch {
             val response = BaseResponse<List<MovieModel>>()
 
@@ -48,7 +50,7 @@ class HomeViewModel @Inject constructor(private val moviesRepositoryImpl: Movies
             } catch (e: Exception) {
                 Log.d("getNowPlayingMovies", "getNowPlayingMovies: ")
                 response.throwable = e
-                response.errorString = response.errorToString(e)
+//                response.errorString = response.errorToString(e)
 
 
             }
@@ -58,7 +60,7 @@ class HomeViewModel @Inject constructor(private val moviesRepositoryImpl: Movies
         }
     }
 
-    fun getUpComingMovies() {
+    private fun getUpComingMovies() {
         viewModelScope.launch {
             val response = BaseResponse<List<MovieModel>>()
 
@@ -67,8 +69,6 @@ class HomeViewModel @Inject constructor(private val moviesRepositoryImpl: Movies
                 response.data = upComingMovies.results
             } catch (e: Exception) {
                 response.throwable = e
-                response.errorString = response.errorToString(e)
-
 
             }
 
@@ -79,7 +79,7 @@ class HomeViewModel @Inject constructor(private val moviesRepositoryImpl: Movies
         }
     }
 
-    fun getPopularMovies() {
+    private fun getPopularMovies() {
         viewModelScope.launch {
             val response = BaseResponse<List<MovieModel>>()
 
@@ -90,7 +90,6 @@ class HomeViewModel @Inject constructor(private val moviesRepositoryImpl: Movies
             } catch (e: Exception) {
                 Log.e("getPopularError", "getPopularMovies: $e")
                 response.throwable = e
-                response.errorString = response.errorToString(e)
 
 
             }
@@ -111,7 +110,6 @@ class HomeViewModel @Inject constructor(private val moviesRepositoryImpl: Movies
 
                 Log.e("getMovieDetails", "getMovieDetails: Error -> $e", )
                 response.throwable = e
-                response.errorString = response.errorToString(e)
 
 
             }
@@ -119,6 +117,16 @@ class HomeViewModel @Inject constructor(private val moviesRepositoryImpl: Movies
                 movieDetailsMutable.value = response
             }
         }
+    }
+
+    fun clearMovieData() {
+        movieDetailsMutable.value?.data = null
+    }
+
+    fun getMovies() {
+        getPopularMovies()
+        getNowPlayingMovies()
+        getUpComingMovies()
     }
 
 }

@@ -42,9 +42,7 @@ class MoviesFragment : Fragment(),MoviesAdapter.MovieClickListener {
         observeNowPlaying()
         observeUpComing()
 
-        homeViewModel.getPopularMovies()
-        homeViewModel.getNowPlayingMovies()
-        homeViewModel.getUpComingMovies()
+        homeViewModel.getMovies();
 
         return binding.root
 
@@ -73,6 +71,7 @@ class MoviesFragment : Fragment(),MoviesAdapter.MovieClickListener {
     private fun observePopular() {
         homeViewModel.popularMoviesResponse.observe(viewLifecycleOwner) {
 
+            binding.popularLoading.loadingView.visibility= View.GONE
 
             if (it.throwable != null || it.data == null) {
 
@@ -85,7 +84,9 @@ class MoviesFragment : Fragment(),MoviesAdapter.MovieClickListener {
     }
 
     private fun observeNowPlaying() {
+
         homeViewModel.nowPlayingMoviesResponse.observe(viewLifecycleOwner) {
+            binding.noPlayingLoading.loadingView.visibility= View.GONE
             if (it.throwable != null || it.data == null) {
                 return@observe
             }
@@ -95,6 +96,8 @@ class MoviesFragment : Fragment(),MoviesAdapter.MovieClickListener {
 
     private fun observeUpComing() {
         homeViewModel.upComingMoviesResponse.observe(viewLifecycleOwner) {
+
+            binding.upComingLoading.loadingView.visibility= View.GONE
             if (it.throwable != null || it.data == null) {
                 return@observe
             }

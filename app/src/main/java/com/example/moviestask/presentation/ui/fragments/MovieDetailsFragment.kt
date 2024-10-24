@@ -40,15 +40,22 @@ class MovieDetailsFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        binding.backClick.setOnClickListener { requireActivity().onBackPressedDispatcher.onBackPressed() }
+        binding.backClick.setOnClickListener {
+            homeViewModel.clearMovieData()
+            requireActivity().onBackPressedDispatcher.onBackPressed()
+        }
         val movieId = arguments?.getInt("movieId", 0) ?: 0
         observeMovieDetails()
+        if (homeViewModel.movieDetailsResponse.value?.data == null) {
+            binding.loadingView.visibility = View.VISIBLE
+        }
         homeViewModel.getMovieDetails(movieId)
     }
 
     private fun observeMovieDetails() {
         homeViewModel.movieDetailsResponse.observe(viewLifecycleOwner) {
 
+            binding.loadingView.visibility = View.GONE
             if (it.throwable != null || it.data == null) {
                 return@observe
             }
@@ -58,6 +65,11 @@ class MovieDetailsFragment : Fragment() {
     }
 
     private fun setData(movieData: MovieDetailsResponse) {
+        binding.tvMovieName.text = movieData.title
+        binding.tvOverView.text = movieData.overview
+
+
+
         Glide.with(requireContext()).load(Constants.IMAGES_URL + movieData.poster_path)
             .into(binding.posterImage)
     }
