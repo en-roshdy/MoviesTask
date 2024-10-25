@@ -58,8 +58,8 @@ class MoviesFragment : Fragment(), MoviesAdapter.MovieClickListener {
     }
 
 
-    private fun getMovies(){
-        if(isInternetAvailable()){
+    private fun getMovies() {
+        if (isInternetAvailable()) {
             binding.popularLoading.loadingView.show()
 
             binding.noPlayingLoading.loadingView.show()
@@ -68,7 +68,7 @@ class MoviesFragment : Fragment(), MoviesAdapter.MovieClickListener {
 
             homeViewModel.getMovies();
 
-        }else{
+        } else {
 
             binding.popularLoading.loadingView.hide()
             binding.errorPopular.errorLayout.show()
@@ -118,6 +118,7 @@ class MoviesFragment : Fragment(), MoviesAdapter.MovieClickListener {
                 binding.errorPopular.textView.text = "$errorOccurred\n ${it.throwable}"
                 return@observe
             }
+            binding.errorPopular.errorLayout.hide()
             popularAdapter.insertMovies(it.data!!)
 
 
@@ -136,6 +137,7 @@ class MoviesFragment : Fragment(), MoviesAdapter.MovieClickListener {
 
                 return@observe
             }
+            binding.errorNoPlaying.errorLayout.hide()
             nowPlayingAdapter.insertMovies(it.data!!)
         }
     }
@@ -148,11 +150,12 @@ class MoviesFragment : Fragment(), MoviesAdapter.MovieClickListener {
             if (it.throwable != null || it.data == null) {
                 Log.e(TAG, "observeUpComing: Error ${it.throwable}")
                 binding.errorUpComing.errorLayout.show()
-             binding.errorUpComing.textView.text = "$errorOccurred\n ${it.throwable}"
+                binding.errorUpComing.textView.text = "$errorOccurred\n ${it.throwable}"
 
                 return@observe
             }
 
+            binding.errorUpComing.errorLayout.hide()
             upComingAdapter.insertMovies(it.data!!)
         }
     }
@@ -188,7 +191,8 @@ class MoviesFragment : Fragment(), MoviesAdapter.MovieClickListener {
     }
 
     private fun isInternetAvailable(): Boolean {
-        val connectivityManager = requireContext().getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+        val connectivityManager =
+            requireContext().getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
         val networkInfo = connectivityManager.activeNetworkInfo
         return networkInfo != null && networkInfo.isConnected
     }
