@@ -1,8 +1,9 @@
 
 package com.example.moviestask.di
+import com.example.moviestask.BuildConfig
+
 import com.example.moviestask.data.data_source.MoviesApiService
 import com.example.moviestask.utils.Constants.BASE_URL
-import com.example.moviestask.utils.Constants.TOKEN
 import com.google.gson.GsonBuilder
 import com.ihsanbal.logging.LoggingInterceptor
 import dagger.Module
@@ -33,7 +34,7 @@ class AppModule {
             .addHeader("Accept", "application/json")
             .addHeader("charset", "utf-8")
             .addHeader("Content-Type", "application/json")
-                .addHeader("Authorization", "Bearer $TOKEN")
+            .addHeader("Authorization", "Bearer ${BuildConfig.API_KEY}")
 //                .addHeader("Accept-Language", Lingver.getInstance().getLocale().language)
 //                .addHeader("version", BuildConfig.VERSION_NAME)
             .build()

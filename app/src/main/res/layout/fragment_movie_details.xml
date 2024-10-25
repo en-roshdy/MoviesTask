@@ -143,6 +143,30 @@
                    />
 
            </LinearLayout>
+           <LinearLayout
+               android:layout_width="match_parent"
+               android:layout_height="wrap_content"
+               android:orientation="horizontal"
+               android:layout_marginVertical="@dimen/_4sdp">
+               <TextView
+                   android:layout_width="wrap_content"
+                   android:textStyle="bold"
+                   android:layout_height="wrap_content"
+                   android:text="Genre : "
+                   android:textColor="@color/yellow"/>
+
+
+
+
+               <TextView
+                   android:id="@+id/tvGenre"
+                   android:layout_width="match_parent"
+                   android:layout_height="wrap_content"
+                   android:textColor="@color/white"
+                   android:text="vote"
+                   />
+
+           </LinearLayout>
 
 
 

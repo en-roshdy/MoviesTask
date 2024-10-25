@@ -1,115 +1,152 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".presentation.ui.fragments.MoviesFragment">
 
-    <LinearLayout
+
+    <androidx.core.widget.NestedScrollView
+        android:id="@+id/dataView"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:paddingVertical="@dimen/_10sdp"
-        android:background="@android:color/darker_gray"
-        android:orientation="vertical">
+        android:layout_height="match_parent"
+        android:visibility="visible"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
         <LinearLayout
+            android:id="@+id/dataLinear"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:background="@android:color/darker_gray"
+            android:orientation="vertical"
+            android:paddingVertical="@dimen/_10sdp">
 
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="@dimen/_5sdp"
-                android:paddingHorizontal="@dimen/_8sdp"
-                android:text="Now Playing"
-                android:textColor="@color/white"
-                android:textSize="@dimen/_15ssp"
-                android:textStyle="bold" />
-
-
-            <include
-                android:id="@+id/noPlayingLoading"
-                layout="@layout/loading_view" />
-
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/rvNowPlaying"
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:paddingStart="@dimen/_8sdp"
-                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                tools:listitem="@layout/item_movie" />
+                android:orientation="vertical">
+
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/_5sdp"
+                    android:paddingHorizontal="@dimen/_8sdp"
+                    android:text="Now Playing"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/_15ssp"
+                    android:textStyle="bold" />
+
+
+                <include
+                    android:id="@+id/noPlayingLoading"
+                    layout="@layout/loading_view" />
+
+
+                <include
+                    android:id="@+id/errorNoPlaying"
+                    layout="@layout/try_again_layout"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/_200sdp"
+                    android:visibility="gone" />
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rvNowPlaying"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:paddingStart="@dimen/_8sdp"
+                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                    tools:listitem="@layout/item_movie" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginVertical="@dimen/_10sdp"
+                android:orientation="vertical">
+
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/_5sdp"
+                    android:paddingHorizontal="@dimen/_8sdp"
+                    android:text="UpComing"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/_15ssp"
+                    android:textStyle="bold" />
+
+
+                <include
+                    android:id="@+id/upComingLoading"
+                    layout="@layout/loading_view" />
+
+
+                <include
+                    android:id="@+id/errorUpComing"
+                    layout="@layout/try_again_layout"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/_200sdp"
+                    android:visibility="gone" />
+
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rvUpComingMovies"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:paddingStart="@dimen/_8sdp"
+                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                    tools:listitem="@layout/item_movie" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/_5sdp"
+                    android:paddingHorizontal="@dimen/_8sdp"
+                    android:text="Popular"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/_15ssp"
+                    android:textStyle="bold" />
+
+                <include
+                    android:id="@+id/popularLoading"
+                    layout="@layout/loading_view" />
+
+
+                <include
+                    android:id="@+id/errorPopular"
+                    layout="@layout/try_again_layout"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/_200sdp"
+                    android:visibility="gone" />
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rvPopularMovies"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:paddingStart="@dimen/_8sdp"
+                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                    tools:listitem="@layout/item_movie" />
+
+            </LinearLayout>
 
         </LinearLayout>
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginVertical="@dimen/_10sdp"
-            android:orientation="vertical">
-
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="@dimen/_5sdp"
-                android:paddingHorizontal="@dimen/_8sdp"
-                android:text="UpComing"
-                android:textColor="@color/white"
-                android:textSize="@dimen/_15ssp"
-                android:textStyle="bold" />
-
-
-            <include
-                android:id="@+id/upComingLoading"
-                layout="@layout/loading_view" />
-
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/rvUpComingMovies"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:paddingStart="@dimen/_8sdp"
-                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                tools:listitem="@layout/item_movie" />
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
-
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="@dimen/_5sdp"
-                android:paddingHorizontal="@dimen/_8sdp"
-                android:text="Popular"
-                android:textColor="@color/white"
-                android:textSize="@dimen/_15ssp"
-                android:textStyle="bold" />
-
-            <include
-                android:id="@+id/popularLoading"
-                layout="@layout/loading_view" />
-
-
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/rvPopularMovies"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:paddingStart="@dimen/_8sdp"
-                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                tools:listitem="@layout/item_movie" />
-
-        </LinearLayout>
-
-    </LinearLayout>
-
-</androidx.core.widget.NestedScrollView>
+    </androidx.core.widget.NestedScrollView>
+</RelativeLayout>

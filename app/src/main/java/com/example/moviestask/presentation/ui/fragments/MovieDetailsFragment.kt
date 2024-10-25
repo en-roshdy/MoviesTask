@@ -67,6 +67,12 @@ class MovieDetailsFragment : Fragment() {
     private fun setData(movieData: MovieDetailsResponse) {
         binding.tvMovieName.text = movieData.title
         binding.tvOverView.text = movieData.overview
+        binding.tvVote.text = "${movieData.vote_count}"
+        binding.tvReleaseDate.text = movieData.release_date
+
+        val genreNames = movieData.genres.joinToString(separator = "-")
+        binding.tvGenre.text = genreNames
+
 
 
 

@@ -38,7 +38,7 @@ class HomeViewModel @Inject constructor(private val moviesRepositoryImpl: Movies
 
 
 
-    private fun getNowPlayingMovies() {
+     fun getNowPlayingMovies() {
         viewModelScope.launch {
             val response = BaseResponse<List<MovieModel>>()
 
@@ -60,7 +60,7 @@ class HomeViewModel @Inject constructor(private val moviesRepositoryImpl: Movies
         }
     }
 
-    private fun getUpComingMovies() {
+     fun getUpComingMovies() {
         viewModelScope.launch {
             val response = BaseResponse<List<MovieModel>>()
 
@@ -79,7 +79,7 @@ class HomeViewModel @Inject constructor(private val moviesRepositoryImpl: Movies
         }
     }
 
-    private fun getPopularMovies() {
+     fun getPopularMovies() {
         viewModelScope.launch {
             val response = BaseResponse<List<MovieModel>>()
 
